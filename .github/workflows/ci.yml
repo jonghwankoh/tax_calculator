@@ -18,4 +18,4 @@ jobs:
       - name: Run tests
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)  # PYTHONPATH 설정
-          python -m unittest discover tests -v  # 상세 출력 모드로 테스트 실행
+          pytest -v  # 상세 출력 모드로 테스트 실행
