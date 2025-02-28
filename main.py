@@ -5,25 +5,24 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-def calculate_tax(income):
-    # 간단한 세금 계산 로직 (실제 연말정산 계산과는 다를 수 있습니다)
-    if income <= 12000000:
-        tax = income * 0.06
-    elif income <= 46000000:
-        tax = 720000 + (income - 12000000) * 0.15
-    else:
-        tax = 5820000 + (income - 46000000) * 0.24
-    return tax
-
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/calculate", response_class=HTMLResponse)
-async def calculate(request: Request, income: int = Form(...)):
-    tax = calculate_tax(income)
-    return templates.TemplateResponse("result.html", {"request": request, "income": income, "tax": tax})
+async def calculate(request: Request, income: int = Form(...), pension: int = Form(...), card: int = Form(...)):
+    net_income, tax_deduction = calculate_tax(income, pension, card)
+    return templates.TemplateResponse("result.html", {
+        "request": request,
+        "income": income,
+        "pension": pension,
+        "card": card,
+        "net_income": net_income,
+        "tax_deduction": tax_deduction
+    })
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+def calculate_tax(income: int, pension: int, card: int) -> tuple:
+    # 간단한 계산 로직 (실제 세금 계산은 더 복잡할 수 있습니다)
+    tax_deduction = min(pension * 0.15, 400000) + min(card * 0.15, 300000)
+    net_income = income - tax_deduction
+    return net_income, tax_deduction

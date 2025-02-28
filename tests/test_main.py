@@ -1,3 +1,4 @@
+import pytest
 from fastapi.testclient import TestClient
 import sys
 import os
@@ -12,11 +13,20 @@ def test_read_root():
     assert "연말정산 계산기" in response.text
 
 def test_calculate_success():
-    response = client.post("/calculate", data={"income": 30000000})
+    response = client.post("/calculate", data={"income": 50000000, "pension": 2000000, "card": 10000000})
     assert response.status_code == 200
     assert "연말정산 결과" in response.text
-    assert "30000000" in response.text
+    assert "최종 소득" in response.text
 
-def test_calculate_failure():
-    response = client.post("/calculate", data={"income": "invalid"})
-    assert response.status_code == 422  # Unprocessable Entity
+def test_calculate_invalid_input():
+    response = client.post("/calculate", data={"income": -1000, "pension": 100, "card": 100})
+    assert response.status_code == 422 #200 응답코드라 오류가 발생 
+
+def test_calculate_missing_input():
+    response = client.post("/calculate", data={"income": 50000000, "pension": 2000000})
+    assert response.status_code == 422
+
+def test_calculate_large_numbers():
+    response = client.post("/calculate", data={"income": 1000000000, "pension": 100000000, "card": 500000000})
+    assert response.status_code == 200
+    assert "연말정산 결과" in response.text
