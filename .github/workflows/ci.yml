@@ -35,6 +35,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
+          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.NCR_ENDPOINT }}/tax_calculator:${{ github.sha }}
-          platforms: linux/amd64,linux/arm64    
+          tags: ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
