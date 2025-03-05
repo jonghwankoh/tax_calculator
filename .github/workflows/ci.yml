@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.NCR_ACCESS_KEY }}
           password: ${{ secrets.NCR_SECRET_KEY }}
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
