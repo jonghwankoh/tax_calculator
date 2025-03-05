@@ -20,4 +20,4 @@ jobs:
           sudo docker stop tax_calculator || true
           sudo docker rm tax_calculator || true
           sudo docker pull ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
-          sudo docker run -d --name tax_calculator tax_calculator:latest
+          sudo docker run -d -p 8000:8000 --name tax_calculator ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
