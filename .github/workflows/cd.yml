@@ -16,8 +16,8 @@ jobs:
         password: ${{ secrets.NAVER_CLOUD_PASSWORD }}
         port: ${{ secrets.NCP_PORT }}
         script: |
-          docker login ${{ secrets.NCR_ENDPOINT }} -u ${{ secrets.NCR_ACCESS_KEY }}
-          docker pull ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
-          docker stop tax_calculator || true
-          docker rm tax_calculator || true
-          docker run -d --name tax_calculator shezgone/tax_calculator:latest
+          sudo docker login ${{ secrets.NCR_ENDPOINT }} -u ${{ secrets.NCR_ACCESS_KEY }} -p ${{ secrets.NCR_SECRET_KEY }}
+          sudo docker pull ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
+          sudo docker stop tax_calculator || true
+          sudo docker rm tax_calculator || true
+          sudo docker run -d --name tax_calculator shezgone/tax_calculator:latest
