@@ -1,0 +1,22 @@
+name: Deploy to Naver Cloud
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to VM
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.NAVER_CLOUD_HOST }}
+        username: ${{ secrets.NAVER_CLOUD_USERNAME }}
+        key: ${{ secrets.NAVER_CLOUD_SSH_KEY }}
+        script: |
+          docker login ${{ secrets.NCR_ENDPOINT }} -u ${{ secrets.NCR_ACCESS_KEY }}
+          docker pull ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
+          docker stop tax_calculator || true
+          docker rm tax_calculator || true
+          docker run -d --name tax_calculator shezgone/tax_calculator:latest
