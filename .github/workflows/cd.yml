@@ -7,13 +7,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
+    
     - name: Login to NAVER Cloud Container Registry
       uses: docker/login-action@v2
       with:
         registry: ${{ secrets.NCR_ENDPOINT }}
         username: ${{ secrets.NCR_ACCESS_KEY }}
         password: ${{ secrets.NCR_SECRET_KEY }}
+    
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
@@ -21,6 +24,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
+    
     - name: Deploy to VM
       uses: appleboy/ssh-action@master
       with:
