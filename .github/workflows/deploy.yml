@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Run tests
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)  # PYTHONPATH 설정
+
     - name: Login to NAVER Cloud Container Registry
       uses: docker/login-action@v2
       with:
@@ -20,7 +24,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: ../Dockerfile
+        file: ./Dockerfile
         push: true
         tags: ${{ secrets.NCR_ENDPOINT }}/tax_calculator:latest
     
