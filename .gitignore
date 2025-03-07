@@ -32,3 +32,6 @@ htmlcov/
 build/
 dist/
 *.egg-info/
+
+# Badge
+coverage.svg
