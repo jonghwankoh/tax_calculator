@@ -53,6 +53,7 @@
 각 워크플로우 파일의 내용을 확인하고 필요에 따라 수정해보세요.
 
 ## 워크플로우 사전작업
+
 1. NCP 포털 마이페이지에서 공개키, 비밀키를 획득
 2. 워크플로우에 등록된 secrets을 등록합니다. (Settings>Secret and Variables>Actions)
 

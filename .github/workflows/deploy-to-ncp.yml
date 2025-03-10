@@ -14,7 +14,7 @@ jobs:
     - name: Login to NAVER Cloud Container Registry
       uses: docker/login-action@v2
       with:
-        registry: ${{ secrets.NCR_ENDPOINT }}
+        registry: ${{ secrets.NCR_ENDPOINT }} # [레포지토리명].kr.ncr.ntruss.com
         username: ${{ secrets.NCR_ACCESS_KEY }}
         password: ${{ secrets.NCR_SECRET_KEY }}
     
