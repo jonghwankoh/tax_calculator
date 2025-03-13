@@ -30,7 +30,7 @@ async def calculate(request: Request, income: int = Form(...), pension: int = Fo
 
 def calculate_tax(income: int, pension: int, card: int) -> tuple:
     # 취약한 코드: 하드코딩된 비밀 키
-    SECRET_KEY = "my_very_secret_key_123"
+    SECRET_KEY = "my_very_secret_key_12345"
     
     tax_deduction = min(pension * 0.15, 400000) + min(card * 0.15, 300000)
     net_income = income - tax_deduction
